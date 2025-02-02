@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import pandas as pd
 import os
 from patient_funcs import *
@@ -8,8 +8,7 @@ from patient_funcs import *
 
 
 dict_doctor_id_password = {"benji" : "mew"}
-doctor_to_patient_info = {"benji" : "m"}
-
+doctor_to_patient_info = {"benji" : "no_file"}
 
 def login_check(doctor_id, password, ):
     if doctor_id not in dict_doctor_id_password:
@@ -49,14 +48,15 @@ def update_excel():
 
     column_2a = doctor_to_patient_info.keys()
     column_2b = list_id_patient_info
-
+    print(column_2a)
+    print(column_2b)
 
     df_doctor_id_password = pd.DataFrame({'doctor_id': column_1a, 'password': column_1b})
     df_doctor_patient_info = pd.DataFrame({'doctor_id': column_2a, 'patient_info': column_2b})
 
 
     df_doctor_id_password.to_excel("doctor_id_password.xlsx")
-    df_doctor_patient_info.to_csv("doctor_id_patient_info.xlsx")
+    df_doctor_patient_info.to_excel("doctor_id_patient_info.xlsx")
 
 
 
@@ -66,7 +66,7 @@ app = Flask (__name__)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
+app.secret_key = "Saiyara"
 
 
 @app.route("/")
@@ -104,6 +104,7 @@ def login():
 
         if 'login' in request.form:
             if login_check(usr_name, usr_pwd):
+                session['username'] = usr_name
 
                 return render_template('profile.html')
             else:
@@ -127,6 +128,10 @@ def upload():
 
     if request.method == 'POST':
 
+        if 'username' in session:
+            username = session['username']
+            patient_info_file_name = doctor_to_patient_info[username]
+
         file = request.files['file']
 
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
@@ -134,9 +139,31 @@ def upload():
 
         ids, preds = analyze_file(file)
 
+        if patient_info_file_name != "no_file":
+            print("HELLLLLLO")
+            files_list = patient_info_file_name.split[","]
+            for i in range(len(files_list)):
+
+                ids_2, preds_2 = analyze_file(files_list[i])
+
+                ids = ids + ids_2
+                preds = preds + preds_2
+
+
+            doctor_to_patient_info[username] += "," + file.filename
+            update_excel()
+
+        else:
+            #store the file; update excel
+
+            doctor_to_patient_info[username] = "/uploads/" + file.filename
+            print(doctor_to_patient_info[username])
+            update_excel()
+
         return render_template("patient_dashboard.html", ids = ids, preds = preds)
 
 
 
 if __name__ == '__main__':
+    #update_excel()
     app.run(debug=True)

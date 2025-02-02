@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Input Patient Data</title>
+
+    <style>
+body {
+    background-color: rgb(39, 41, 66);
+    background-image: url("/static/alan.png");
+    background-repeat: repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+
+}
+
+p {
+    font-family: Calibri;
+    color: white;
+    font-size: 50px;
+    text-align: center;
+
+
+
+}
+
+.button {
+
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    margin: 50px;
+
+}
+
+
+
+</style>
+
+
+
 </head>
 <body>
 <p>Please upload patient data.</p>
 
+<div class = "button">
 <form class="form-group" action="/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <br>
     <button type="submit">Upload</button>
 </form>
-
+</div>
 </body>
 </html>

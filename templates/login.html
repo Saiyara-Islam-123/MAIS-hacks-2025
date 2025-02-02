@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
     <title>PsychAid Login</title>
+
 </head>
 <body>
-<h1>Please login</h1>
+<link rel="stylesheet" href="/static/style.css">
 
+<h1>PsychAid: Computational psychiatry AI tool</h1>
+<p>Dedicated to Dr Rochon</p>
+<h2>Please login</h2>
+<br>
+
+<div class = "buttons">
 <form class="form-group" action="/login" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -17,12 +24,12 @@
 
     <button type="submit" name="login">Login</button>
 </form>
-
+</div>
 
 <br>
-<p>Or Sign up</p>
-<br>
 
+<h2>Or Sign up</h2>
+<div class = "buttons">
 <form class="form-group" action="/add_user" method="post">
     <label for="username">Username:</label>
     <input type="text" id="newusername" name="newusername" required>
@@ -32,7 +39,7 @@
 
     <button type="submit" name="signup">Sign up</button>
 </form>
-
+</div>
 
 </body>
 </html>
