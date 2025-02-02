@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <title>PsychAid Login</title>
 </head>
 <body>
-<p>Please login</p>
+<h1>Please login</h1>
 
 <form class="form-group" action="/login" method="post">
     <label for="username">Username:</label>
@@ -17,7 +18,21 @@
     <button type="submit" name="login">Login</button>
 </form>
 
-<p> {{name}} </p>
+
+<br>
+<p>Or Sign up</p>
+<br>
+
+<form class="form-group" action="/add_user" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="newusername" name="newusername" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="newpassword" name="newpassword" required>
+
+    <button type="submit" name="signup">Sign up</button>
+</form>
+
 
 </body>
 </html>
