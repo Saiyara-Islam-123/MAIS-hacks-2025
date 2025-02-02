@@ -27,5 +27,4 @@ y_test = test_df[["phq9_cat_end"]].copy()
 def get_test_train():
     return torch.tensor(X_train.values, dtype=torch.float32), torch.tensor(y_train.values, dtype=torch.float32), torch.tensor(X_test.values, dtype=torch.float32), torch.tensor(y_test.values, dtype=torch.float32)
 
-for col in X_test.iloc[0]:
-    print(col)
+X_test.iloc[[0, 1]].to_excel("patients.xlsx")

@@ -9,6 +9,14 @@ dict_cat_to_severity = {0 : "None-minimal",
                         3: "Moderately severe",
                         4: "Severe"
                         }
+def cat_to_severity(cats):
+    list_severity = []
+    for cat in cats:
+        list_severity.append(dict_cat_to_severity[cat])
+
+    return list_severity
+
 
 def predict(patient_info):
-    return dict_cat_to_severity[loaded_model.predict(patient_info)], loaded_model.predict_proba(patient_info)
+    preds = loaded_model.predict(patient_info)
+    return cat_to_severity(preds)

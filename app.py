@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import os
+from patient_funcs import *
 
 #######################LOGIN STUFF
 
@@ -131,7 +132,9 @@ def upload():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
 
-        return f"File uploaded successfully: {file.filename}"
+        ids, preds = analyze_file(file)
+
+        return render_template("patient_dashboard.html", ids = ids, preds = preds)
 
 
 
